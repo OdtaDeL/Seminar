@@ -324,15 +324,36 @@ with tab3:
         st.subheader("Xu hướng theo thời gian")
         history = st.session_state.db.get_history(limit=100)
         if history:
-            timeline_df = pd.DataFrame(history, columns=['ID', 'Câu văn', 'Cảm xúc', 'Độ tin cậy', 'Thời gian'])
+            # Normalize history rows: DB may store (id, text, sentiment, timestamp)
+            # Older entries don't include confidence. Build a consistent dict list
+            rows = []
+            for row in history:
+                # row can be (id, text, sentiment, timestamp) or (id, text, sentiment, confidence, timestamp)
+                if len(row) == 4:
+                    _id, text, sentiment, timestamp = row
+                    confidence = None
+                elif len(row) >= 5:
+                    _id, text, sentiment, confidence, timestamp = row[:5]
+                else:
+                    # unexpected shape, skip
+                    continue
+                rows.append({
+                    'ID': _id,
+                    'Câu văn': text,
+                    'Cảm xúc': sentiment,
+                    'Độ tin cậy': confidence,
+                    'Thời gian': timestamp
+                })
+
+            timeline_df = pd.DataFrame(rows)
             timeline_df['Thời gian'] = pd.to_datetime(timeline_df['Thời gian'])
-            
+
             # Group by time and sentiment
             timeline_grouped = timeline_df.groupby([
                 pd.Grouper(key='Thời gian', freq='H'),
                 'Cảm xúc'
             ]).size().reset_index(name='Số lượng')
-            
+
             fig_timeline = px.line(
                 timeline_grouped,
                 x='Thời gian',

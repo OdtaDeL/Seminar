@@ -6,7 +6,7 @@ import os
 class SentimentDatabase:
     """Quản lý cơ sở dữ liệu SQLite cho lịch sử phân loại cảm xúc"""
     
-    def __init__(self, db_path: str = "data/sentiment_history.db"):
+    def __init__(self, db_path: str = "var/data/sentiment_history.db"):
         """
         Khởi tạo kết nối database
         
@@ -14,7 +14,13 @@ class SentimentDatabase:
             db_path: Đường dẫn đến file database
         """
         self.db_path = db_path
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        # Ensure directory exists. If a legacy `data/` folder exists, prefer it for backwards compatibility.
+        dir_name = os.path.dirname(db_path)
+        if not os.path.exists(dir_name) and os.path.exists(os.path.join(os.path.dirname(dir_name), 'data')):
+            # If repo still uses 'data/', use that folder
+            dir_name = os.path.join(os.path.dirname(dir_name), 'data')
+            db_path = os.path.join(dir_name, os.path.basename(db_path))
+        os.makedirs(dir_name, exist_ok=True)
         self.init_database()
     
     def init_database(self):
