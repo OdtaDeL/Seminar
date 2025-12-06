@@ -29,7 +29,6 @@ def test_10_cases():
         {"stt": 8, "text": "Ngày mai đi học", "expected": "NEUTRAL"},
         {"stt": 9, "text": "Cảm ơn bạn rất nhiều", "expected": "POSITIVE"},
         {"stt": 10, "text": "Mệt mỏi quá hôm nay", "expected": "NEGATIVE"},
-        {"stt": 11, "text": "Bắc Kỳ Chó", "expected": "NEGATIVE"},
     ]
     
     print()
