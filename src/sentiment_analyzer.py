@@ -141,16 +141,16 @@ class SentimentAnalyzer:
         
         # Chuẩn hóa các ký tự đặc biệt phổ biến
         replacements = {
-            'rất': 'rất',
-            'dở': 'dở',
-            'tệ': 'tệ',
-            'tuyệt': 'tuyệt',
+            'rat': 'rất',
+            'do': 'dở',
+            'te': 'tệ',
+            'tuyet': 'tuyệt',
             'hay': 'hay',
-            'buồn': 'buồn',
+            'buon': 'buồn',
             'vui': 'vui',
-            'mệt': 'mệt',
-            'ổn': 'ổn',
-            'tốt': 'tốt',
+            'met': 'mệt',
+            'on': 'ổn',
+            'tot': 'tốt',
         }
         
         # Thay thế các từ chuẩn hóa
@@ -163,19 +163,7 @@ class SentimentAnalyzer:
         return text
     
     def analyze(self, text: str) -> Dict[str, any]:
-        """
-        Phân tích cảm xúc của câu văn - Tích hợp 3 bước
-        
-        Bước 1: Tiền xử lý (Preprocessing)
-        Bước 2: Phân loại cảm xúc (Sentiment Analysis) 
-        Bước 3: Hợp nhất & xử lý lỗi (Validation)
-        
-        Args:
-            text: Câu văn tiếng Việt cần phân tích
-            
-        Returns:
-            Dictionary theo format: {"text": "câu", "sentiment": "POSITIVE/NEGATIVE/NEUTRAL"}
-        """
+       
         # Bước 3: Kiểm tra - Câu nhập ≥5 ký tự
         if not text or not text.strip() or len(text.strip()) < 5:
             return {
@@ -258,15 +246,7 @@ class SentimentAnalyzer:
             }
     
     def batch_analyze(self, texts: list) -> list:
-        """
-        Phân tích nhiều câu văn cùng lúc
         
-        Args:
-            texts: Danh sách các câu văn
-            
-        Returns:
-            Danh sách kết quả phân tích
-        """
         results = []
         for text in texts:
             results.append(self.analyze(text))

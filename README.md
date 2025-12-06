@@ -8,11 +8,13 @@
 - pip
 - Ubuntu/Debian: `python3-venv` package
 
- python -m pytest tests/test_10_cases.py -q
- python -m pytest tests/test_improved.py -q
+python -m pytest tests/test_10_cases.py -q
+python -m pytest tests/test_improved.py -q
+
 ### Linux / macOS (Ubuntu/Debian)
 
 1. Cài đặt `python3-venv` (chỉ cần trên một số bản Linux):
+
 ## 🚀 Cài đặt
 
 Hướng dẫn dưới đây dùng cho cả Linux/macOS và Windows (PowerShell). Sau khi tạo và kích hoạt virtual environment, cài các dependency từ `requirements.txt`.
@@ -62,6 +64,7 @@ python -m pytest tests/test_improved.py -q
 # Hoặc chạy tất cả tests
 python -m pytest tests -q
 ```
+
 ## 💻 Sử dụng
 
 ### 🌐 Giao diện Web (Streamlit) - Khuyên dùng
